@@ -1,0 +1,10 @@
+{
+  "mode": "no_hardware",
+  "settle_ms": 500,
+  "max_retries": 2,
+  "timeout_ms": 1500,
+  "reports_root": "reports",
+  "replay_root": "replay_data",
+  "rsa_dll_path": null
+}
+

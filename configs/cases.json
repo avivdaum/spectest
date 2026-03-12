@@ -1,0 +1,43 @@
+[
+  {
+    "id": "wifi_like_2g4",
+    "tx_mode": "ofdm",
+    "center_freq_hz": 2445300000.0,
+    "span_hz": 40000000.0,
+    "rbw_hz": 10000.0,
+    "ref_level_dbm": -20.0,
+    "settle_ms": 500,
+    "max_retries": 2,
+    "tx_params": {
+      "sample_rate_hz": 20000000.0,
+      "gain_db": 45.0
+    },
+    "limits": {
+      "freq_error_hz_max": 10000000.0,
+      "peak_power_dbm_min": -80.0,
+      "peak_power_dbm_max": 5.0,
+      "obw_hz_min": 500000.0,
+      "obw_hz_max": 39000000.0
+    }
+  },
+  {
+    "id": "narrowband_915",
+    "tx_mode": "cw",
+    "center_freq_hz": 915000000.0,
+    "span_hz": 5000000.0,
+    "rbw_hz": 3000.0,
+    "ref_level_dbm": -30.0,
+    "tx_params": {
+      "tone_offset_hz": 0.0,
+      "gain_db": 30.0
+    },
+    "limits": {
+      "freq_error_hz_max": 2000000.0,
+      "peak_power_dbm_min": -90.0,
+      "peak_power_dbm_max": 10.0,
+      "obw_hz_min": 1000.0,
+      "obw_hz_max": 4500000.0
+    }
+  }
+]
+
