@@ -60,4 +60,3 @@ class RsaClient(ABC):
     @abstractmethod
     def disconnect(self) -> None:
         raise NotImplementedError
-

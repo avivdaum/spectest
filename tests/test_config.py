@@ -36,4 +36,3 @@ def test_load_run_profile(tmp_path):
     profile = load_run_profile(path)
     assert profile.mode == "rsa_only"
     assert profile.settle_ms == 750
-

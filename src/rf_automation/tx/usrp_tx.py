@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib
 from dataclasses import asdict, dataclass
 from types import ModuleType
-from typing import Any, Callable
+from typing import Any
 
 from ..interfaces import TxAdapter, TxAdapterError
 from ..models import TestCase
@@ -58,7 +58,9 @@ class UsrpTxAdapter(TxAdapter):
         try:
             self._module = importlib.import_module(self.module_path)
         except Exception as exc:
-            raise TxAdapterError(f"Failed to import TX module {self.module_path}: {exc}") from exc
+            raise TxAdapterError(
+                f"Failed to import TX module {self.module_path}: {exc}"
+            ) from exc
 
     def _call(self, name: str, *args: Any) -> Any:
         if self._module is None:

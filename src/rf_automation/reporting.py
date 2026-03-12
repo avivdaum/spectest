@@ -5,7 +5,6 @@ import json
 from base64 import b64decode
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
 import numpy as np
 
@@ -102,8 +101,12 @@ class ReportWriter:
         rows = []
         for result in run_result.results:
             metrics = result.metrics
-            plot_link = _link_for_artifact(run_result.report_dir, result.artifacts.get("trace_plot"))
-            npz_link = _link_for_artifact(run_result.report_dir, result.artifacts.get("trace_npz"))
+            plot_link = _link_for_artifact(
+                run_result.report_dir, result.artifacts.get("trace_plot")
+            )
+            npz_link = _link_for_artifact(
+                run_result.report_dir, result.artifacts.get("trace_npz")
+            )
             rows.append(
                 "<tr>"
                 f"<td>{result.case_id}</td>"
@@ -174,4 +177,3 @@ def _link_for_artifact(run_dir: Path, artifact_path: str | None) -> str:
     path = Path(artifact_path)
     rel = path.relative_to(run_dir)
     return f'<a href="{rel.as_posix()}">{rel.name}</a>'
-

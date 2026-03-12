@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import ctypes
-from ctypes import POINTER, byref, c_bool, c_double, c_float, c_int
+from ctypes import byref, c_bool, c_double, c_float, c_int
 from dataclasses import dataclass
 from pathlib import Path
 from time import monotonic
@@ -63,7 +63,9 @@ class LiveRsaClient(RsaClient):
         device_ids = (c_int * DEVSRCH_MAX_NUM_DEVICES)()
         device_serial = ctypes.create_string_buffer(DEVSRCH_SERIAL_MAX_STRLEN)
         device_type = ctypes.create_string_buffer(DEVSRCH_TYPE_MAX_STRLEN)
-        self._call("DEVICE_Search", byref(num_found), device_ids, device_serial, device_type)
+        self._call(
+            "DEVICE_Search", byref(num_found), device_ids, device_serial, device_type
+        )
         if num_found.value < 1:
             raise RsaClientError("No RSA instruments found")
         self._call("DEVICE_Connect", device_ids[0])
@@ -114,7 +116,9 @@ class LiveRsaClient(RsaClient):
                 raise RsaClientError(f"SPECTRUM_WaitForDataReady failed with code {rs}")
         if not ready.value:
             self._call("DEVICE_Stop")
-            raise RsaClientError(f"Timed out waiting for spectrum trace ({timeout_ms} ms)")
+            raise RsaClientError(
+                f"Timed out waiting for spectrum trace ({timeout_ms} ms)"
+            )
 
         self._call(
             "SPECTRUM_GetTrace",
@@ -127,7 +131,8 @@ class LiveRsaClient(RsaClient):
         trace = np.ctypeslib.as_array(trace_buffer).astype(float)
         freq = np.arange(
             self._settings.actualStartFreq,
-            self._settings.actualStartFreq + self._settings.actualFreqStepSize * trace_len,
+            self._settings.actualStartFreq
+            + self._settings.actualFreqStepSize * trace_len,
             self._settings.actualFreqStepSize,
             dtype=float,
         )
@@ -168,4 +173,3 @@ class LiveRsaClient(RsaClient):
         if rs != 0:
             raise RsaClientError(f"RSA API call {fn_name} failed with code {rs}")
         return rs
-

@@ -65,4 +65,3 @@ def test_full_hw_mode_runs_end_to_end_with_mocked_clients(tmp_path):
     assert tx.starts == 1
     assert tx.stops == 1
     assert run.results[0].metrics is not None
-

@@ -27,4 +27,3 @@ class NullTxAdapter(TxAdapter):
 
     def disconnect(self) -> None:
         self.connected = False
-

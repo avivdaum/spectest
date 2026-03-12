@@ -31,7 +31,11 @@ class MockRsaClient(RsaClient):
 
     def configure_spectrum(self, case: TestCase) -> None:
         self._current_case = case
-        self._status = {"connected": self._connected, "source": "mock", "configured": True}
+        self._status = {
+            "connected": self._connected,
+            "source": "mock",
+            "configured": True,
+        }
 
     def acquire_trace(self, timeout_ms: int) -> Acquisition:
         del timeout_ms
@@ -70,4 +74,3 @@ class MockRsaClient(RsaClient):
         trace = noise + peak * (peak_level - noise)
         status = {"source": "synthetic", "stable": True, "seed": int(seed)}
         return Acquisition(freq_hz=freq, trace_dbm=trace, status=status)
-

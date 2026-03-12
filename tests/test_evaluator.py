@@ -42,4 +42,3 @@ def test_evaluate_metrics_failures():
     passed, reasons = evaluate_metrics(metrics, limits)
     assert not passed
     assert len(reasons) == 3
-

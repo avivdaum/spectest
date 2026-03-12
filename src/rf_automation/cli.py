@@ -28,7 +28,9 @@ def main(argv: list[str] | None = None) -> int:
         profile.rsa_dll_path = args.rsa_dll_path
     cases = load_cases(args.cases)
 
-    tx_adapter, rsa_client, replay_provider = build_runtime_clients(profile, args.tx_module)
+    tx_adapter, rsa_client, replay_provider = build_runtime_clients(
+        profile, args.tx_module
+    )
     orchestrator = RFOrchestrator(
         tx_adapter=tx_adapter,
         rsa_client=rsa_client,
@@ -42,13 +44,21 @@ def main(argv: list[str] | None = None) -> int:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="USRP + RSA RF automation runner")
-    parser.add_argument("--profile", default="configs/run_profile.json", help="Path to run profile JSON")
-    parser.add_argument("--cases", default="configs/cases.json", help="Path to cases JSON")
-    parser.add_argument("--mode", choices=["no_hardware", "rsa_only", "full_hw"], help="Override mode")
+    parser.add_argument(
+        "--profile", default="configs/run_profile.json", help="Path to run profile JSON"
+    )
+    parser.add_argument(
+        "--cases", default="configs/cases.json", help="Path to cases JSON"
+    )
+    parser.add_argument(
+        "--mode", choices=["no_hardware", "rsa_only", "full_hw"], help="Override mode"
+    )
     parser.add_argument("--reports-root", help="Override reports root folder")
     parser.add_argument("--replay-root", help="Override replay root folder")
     parser.add_argument("--rsa-dll-path", help="Path to RSA_API.dll")
-    parser.add_argument("--tx-module", help="Python module path implementing TX hooks for full_hw mode")
+    parser.add_argument(
+        "--tx-module", help="Python module path implementing TX hooks for full_hw mode"
+    )
     return parser
 
 
@@ -59,7 +69,11 @@ def build_runtime_clients(
     if profile.mode == "no_hardware":
         return NullTxAdapter(), MockRsaClient(replay_provider), replay_provider
     if profile.mode == "rsa_only":
-        return NullTxAdapter(), LiveRsaClient(dll_path=profile.rsa_dll_path), replay_provider
+        return (
+            NullTxAdapter(),
+            LiveRsaClient(dll_path=profile.rsa_dll_path),
+            replay_provider,
+        )
     if profile.mode == "full_hw":
         return (
             UsrpTxAdapter(module_path=tx_module),
@@ -78,4 +92,3 @@ def _run_summary(run_result: Any) -> dict[str, Any]:
         "failed": run_result.failed,
         "total": len(run_result.results),
     }
-

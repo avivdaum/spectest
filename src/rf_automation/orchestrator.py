@@ -42,8 +42,12 @@ class RFOrchestrator:
                 self.rsa_client.preset()
 
             for case in cases:
-                result, acquisition = self._run_case(mode, profile, case, mock_for_no_hw)
-                result.artifacts = self.report_writer.write_case_artifacts(run_dir, case, result, acquisition)
+                result, acquisition = self._run_case(
+                    mode, profile, case, mock_for_no_hw
+                )
+                result.artifacts = self.report_writer.write_case_artifacts(
+                    run_dir, case, result, acquisition
+                )
                 results.append(result)
         finally:
             try:
@@ -51,7 +55,9 @@ class RFOrchestrator:
             finally:
                 self.rsa_client.disconnect()
 
-        run_result = RunResult(run_id=run_id, mode=mode, results=results, report_dir=run_dir)
+        run_result = RunResult(
+            run_id=run_id, mode=mode, results=results, report_dir=run_dir
+        )
         self.report_writer.write_run_outputs(run_result)
         return run_result
 
@@ -63,14 +69,18 @@ class RFOrchestrator:
         mock_for_no_hw: MockRsaClient,
     ) -> tuple[CaseResult, Acquisition | None]:
         settle_ms = case.settle_ms if case.settle_ms is not None else profile.settle_ms
-        max_retries = case.max_retries if case.max_retries is not None else profile.max_retries
+        max_retries = (
+            case.max_retries if case.max_retries is not None else profile.max_retries
+        )
         timeout_ms = profile.timeout_ms
         last_error: str | None = None
         acquisition: Acquisition | None = None
 
         for attempt in range(max_retries + 1):
             try:
-                acquisition = self._acquire(mode, case, settle_ms, timeout_ms, mock_for_no_hw)
+                acquisition = self._acquire(
+                    mode, case, settle_ms, timeout_ms, mock_for_no_hw
+                )
                 self._assert_stable(acquisition)
                 metrics = compute_metrics(acquisition, case)
                 if mode == "rsa_only":

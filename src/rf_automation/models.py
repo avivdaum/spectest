@@ -30,17 +30,27 @@ class Limits:
 
     def with_fallback(self, fallback: "Limits") -> "Limits":
         return Limits(
-            freq_error_hz_max=self.freq_error_hz_max
-            if self.freq_error_hz_max is not None
-            else fallback.freq_error_hz_max,
-            peak_power_dbm_min=self.peak_power_dbm_min
-            if self.peak_power_dbm_min is not None
-            else fallback.peak_power_dbm_min,
-            peak_power_dbm_max=self.peak_power_dbm_max
-            if self.peak_power_dbm_max is not None
-            else fallback.peak_power_dbm_max,
-            obw_hz_min=self.obw_hz_min if self.obw_hz_min is not None else fallback.obw_hz_min,
-            obw_hz_max=self.obw_hz_max if self.obw_hz_max is not None else fallback.obw_hz_max,
+            freq_error_hz_max=(
+                self.freq_error_hz_max
+                if self.freq_error_hz_max is not None
+                else fallback.freq_error_hz_max
+            ),
+            peak_power_dbm_min=(
+                self.peak_power_dbm_min
+                if self.peak_power_dbm_min is not None
+                else fallback.peak_power_dbm_min
+            ),
+            peak_power_dbm_max=(
+                self.peak_power_dbm_max
+                if self.peak_power_dbm_max is not None
+                else fallback.peak_power_dbm_max
+            ),
+            obw_hz_min=(
+                self.obw_hz_min if self.obw_hz_min is not None else fallback.obw_hz_min
+            ),
+            obw_hz_max=(
+                self.obw_hz_max if self.obw_hz_max is not None else fallback.obw_hz_max
+            ),
         )
 
     def to_dict(self) -> dict[str, float | None]:
@@ -100,7 +110,9 @@ class RunProfile:
     def from_dict(cls, data: dict[str, Any]) -> "RunProfile":
         mode = str(data.get("mode", "no_hardware"))
         if mode not in VALID_MODES:
-            raise ValueError(f"Unsupported mode: {mode}. Expected one of {sorted(VALID_MODES)}")
+            raise ValueError(
+                f"Unsupported mode: {mode}. Expected one of {sorted(VALID_MODES)}"
+            )
         return cls(
             mode=mode,
             settle_ms=int(data.get("settle_ms", 500)),

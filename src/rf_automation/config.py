@@ -31,4 +31,3 @@ def _expect_dict(value: Any, name: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError(f"{name} must be a JSON object")
     return value
-

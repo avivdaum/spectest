@@ -34,4 +34,3 @@ def test_compute_metrics_peak_and_error():
     metrics = compute_metrics(acq, case)
     assert metrics.peak_power_dbm == -10.0
     assert metrics.freq_error_hz == 0.0
-

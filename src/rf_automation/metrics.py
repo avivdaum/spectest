@@ -41,4 +41,3 @@ def occupied_bandwidth_hz(
     low_idx = max(0, min(low_idx, len(freq_hz) - 1))
     high_idx = max(low_idx, min(high_idx, len(freq_hz) - 1))
     return float(freq_hz[high_idx] - freq_hz[low_idx])
-

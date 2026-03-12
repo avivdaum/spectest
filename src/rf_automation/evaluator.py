@@ -19,15 +19,24 @@ def effective_limits(case: TestCase) -> Limits:
 
 def evaluate_metrics(metrics: CaseMetrics, limits: Limits) -> tuple[bool, list[str]]:
     reasons: list[str] = []
-    if limits.freq_error_hz_max is not None and metrics.freq_error_hz > limits.freq_error_hz_max:
+    if (
+        limits.freq_error_hz_max is not None
+        and metrics.freq_error_hz > limits.freq_error_hz_max
+    ):
         reasons.append(
             f"freq_error_hz {metrics.freq_error_hz:.3f} > {limits.freq_error_hz_max:.3f}"
         )
-    if limits.peak_power_dbm_min is not None and metrics.peak_power_dbm < limits.peak_power_dbm_min:
+    if (
+        limits.peak_power_dbm_min is not None
+        and metrics.peak_power_dbm < limits.peak_power_dbm_min
+    ):
         reasons.append(
             f"peak_power_dbm {metrics.peak_power_dbm:.3f} < {limits.peak_power_dbm_min:.3f}"
         )
-    if limits.peak_power_dbm_max is not None and metrics.peak_power_dbm > limits.peak_power_dbm_max:
+    if (
+        limits.peak_power_dbm_max is not None
+        and metrics.peak_power_dbm > limits.peak_power_dbm_max
+    ):
         reasons.append(
             f"peak_power_dbm {metrics.peak_power_dbm:.3f} > {limits.peak_power_dbm_max:.3f}"
         )
@@ -40,4 +49,3 @@ def evaluate_metrics(metrics: CaseMetrics, limits: Limits) -> tuple[bool, list[s
             f"occupied_bw_hz {metrics.occupied_bw_hz:.3f} > {limits.obw_hz_max:.3f}"
         )
     return len(reasons) == 0, reasons
-

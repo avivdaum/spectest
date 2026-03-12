@@ -35,7 +35,9 @@ class ReplayTraceProvider:
         payload = np.load(path)
         freq = payload["freq_hz"].astype(float)
         trace = payload["trace_dbm"].astype(float)
-        status_raw: Any = payload["status_json"] if "status_json" in payload.files else None
+        status_raw: Any = (
+            payload["status_json"] if "status_json" in payload.files else None
+        )
         status: dict[str, Any]
         if status_raw is None:
             status = {}
@@ -62,4 +64,3 @@ class ReplayTraceProvider:
         status = dict(payload.get("status") or {})
         status["source"] = "replay"
         return Acquisition(freq_hz=freq, trace_dbm=trace, status=status)
-

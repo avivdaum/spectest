@@ -36,4 +36,3 @@ def test_rsa_only_health_mode_passes_pipeline(tmp_path):
     assert len(run.results) == 1
     assert run.results[0].passed is True
     assert run.results[0].limits is None
-
